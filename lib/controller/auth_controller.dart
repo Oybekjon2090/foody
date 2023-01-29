@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -7,8 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../Model/user_model.dart';
-import 'local_sotre/local_store.dart';
+import '../model/user_model.dart';
+import 'local_store/local.dart';
 
 class AuthController extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -16,9 +15,21 @@ class AuthController extends ChangeNotifier {
   UserModel? userModel;
   String verificationId = '';
   String phone = "";
-  String? errorText;
+  String? errorText = '';
   String imagePath = "";
   bool isLoading = false;
+  int currentIndex = 0;
+  bool visibilityOfpasswor = false;
+
+  hidePassword() {
+    visibilityOfpasswor = !visibilityOfpasswor;
+    notifyListeners();
+  }
+
+  setIndex(int index) {
+    currentIndex = index;
+    notifyListeners();
+  }
 
   Future<bool> checkPhone(String phone) async {
     try {
@@ -43,17 +54,21 @@ class AuthController extends ChangeNotifier {
     errorText = null;
     notifyListeners();
     if (await checkPhone(phone)) {
-      errorText = "bu nomer ga uje account ochilgan";
+      errorText = "For this phone number already exist account";
       isLoading = false;
       notifyListeners();
     } else {
       await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: phone,
         verificationCompleted: (PhoneAuthCredential credential) {
+          isLoading = false;
+          notifyListeners();
           print(credential.toString());
         },
         verificationFailed: (FirebaseAuthException e) {
+          errorText = 'The provided phone number is not valid ';
           print(e.toString());
+          notifyListeners();
         },
         codeSent: (String verificationId, int? resendToken) {
           this.phone = phone;
@@ -119,13 +134,13 @@ class AuthController extends ChangeNotifier {
         notifyListeners();
       } else {
         errorText =
-            "Password xatto bolishi mumkin yoki bunaqa nomer bn sign up qilinmagan";
+            "The password may be incorrect or the number may not be registered";
         isLoading = false;
         notifyListeners();
       }
     } catch (e) {
       errorText =
-          "Password xatto bolishi mumkin yoki bunaqa nomer bn sign up qilinmagan";
+          "The password may be incorrect or the number may not be registered";
       isLoading = false;
       notifyListeners();
     }
@@ -155,11 +170,16 @@ class AuthController extends ChangeNotifier {
     notifyListeners();
   }
 
+  deleteImage() {
+    imagePath = '';
+    notifyListeners();
+  }
+
   createUser(VoidCallback onSuccess) async {
     final storageRef = FirebaseStorage.instance
         .ref()
         .child("avatars/${DateTime.now().toString()}");
-    await storageRef.putFile(File(imagePath ?? ""));
+    await storageRef.putFile(File(imagePath));
 
     String url = await storageRef.getDownloadURL();
 

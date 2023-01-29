@@ -1,15 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:foody/view/pages/auth/splash_screen.dart';
 import 'package:provider/provider.dart';
 
-import 'Controller/auth_controller.dart';
-import 'Controller/user_controller.dart';
-import 'view/pages/auth/splash_page.dart';
+import 'controller/auth_controller.dart';
+import 'controller/user_controller.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 
@@ -24,16 +25,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => UserController())
       ],
       child: ScreenUtilInit(
-          designSize: const Size(360, 690),
+          designSize: const Size(428, 926),
           minTextAdapt: true,
           splitScreenMode: true,
-        builder: (context,child) {
-          return const MaterialApp(
-            title: 'Flutter Demo',
-            home: SplashPage(),
-          );
-        }
-      ),
+          builder: (context, child) {
+            return const MaterialApp(
+              home: SplashScreen(),
+            );
+          }),
     );
   }
 }
