@@ -1,6 +1,7 @@
 import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:progress_loading_button/progress_loading_button.dart';
 import 'package:provider/provider.dart';
@@ -93,22 +94,26 @@ class _VerifyPageState extends State<VerifyPage> {
                 currentCode: "",
               ),
             ),
-            LoadingButton(
-              loadingWidget: LoadingAnimationWidget.inkDrop(
-                  color: Style.whiteColor, size: 20),
-              color: Style.primaryColor,
-              defaultWidget: Text('Check'),
-              width: 196,
-              height: 60,
-              onPressed: () {
-                context.read<AuthController>().checkCode(controller.text, () {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (_) => const FillBioPage()),
-                      (route) => false);
-                });
-              },
-            )
+            ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Style.primaryDisabledColor)),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                onPressed: () {
+                  context.read<AuthController>().checkCode(controller.text, () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (_) => const FillBioPage()),
+                        (route) => false);
+                  });
+                },
+                child: context.watch<AuthController>().isLoading
+                    ? Padding(
+                        padding: EdgeInsets.all(2.0),
+                        child: LoadingAnimationWidget.inkDrop(
+                            color: Style.whiteColor, size: 24),
+                      )
+                    : const Text("Check"))
           ],
         ),
       ),

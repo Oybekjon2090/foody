@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:foody/view/pages/auth/set_photo.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../controller/auth_controller.dart';
 import '../../components/custom_textform.dart';
+import '../../components/gender_choose.dart';
+import '../../components/label_textformfield.dart';
+import '../../components/warning_container.dart';
 
 class FillBioPage extends StatefulWidget {
   const FillBioPage({super.key});
@@ -51,15 +55,21 @@ class _FillBioPageState extends State<FillBioPage> {
                 padding: const EdgeInsets.only(left: 24),
                 child: Row(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8.18, vertical: 8.18),
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(9.82)),
-                          color: Color.fromARGB(255, 234, 175, 194)),
-                      child: const Icon(
-                        Icons.arrow_back_ios,
-                        color: Color(0xffF43F5E),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.18, vertical: 8.18),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(9.82)),
+                            color: Color.fromARGB(255, 234, 175, 194)),
+                        child: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Color(0xffF43F5E),
+                        ),
                       ),
                     ),
                     Padding(
@@ -73,100 +83,48 @@ class _FillBioPageState extends State<FillBioPage> {
                   ],
                 ),
               ),
+              24.verticalSpace,
               Padding(
-                padding: const EdgeInsets.only(left: 24, right: 24, top: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Text(
                   'This data will be displayed in your account profile for security',
                   style: GoogleFonts.sourceSansPro(
                       fontSize: 16, fontWeight: FontWeight.w400),
                 ),
               ),
+              35.verticalSpace,
               Padding(
-                padding: const EdgeInsets.only(left: 48, top: 35),
-                child: Row(
-                  children: [
-                    Text(
-                      'Full Name',
-                      style: GoogleFonts.sourceSansPro(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xff2C3A4B)),
-                    ),
-                    Text(
-                      '*',
-                      style: GoogleFonts.sourceSansPro(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xffDA1414)),
-                    ),
-                  ],
-                ),
-              ),
+                  padding: const EdgeInsets.only(left: 48),
+                  child: Label(
+                    text: 'Full Name',
+                  )),
               Padding(
                 padding: const EdgeInsets.only(top: 8, left: 24, right: 24),
                 child: CustomTextFrom(
-                  
                   onchange: (value) {
                     isFullNameEmpty = false;
                     setState(() {});
                   },
+                  label: '',
                   controller: fullname,
-                  keyboardType: TextInputType.emailAddress, hintext: 'Full Name',
-                 
+                  keyboardType: TextInputType.emailAddress,
+                  hintext: 'Full Name', onChange: (s) {  },
                 ),
               ),
               isFullNameEmpty
                   ? Padding(
                       padding:
                           const EdgeInsets.only(left: 24, top: 8, right: 24),
-                      child: Container(
-                        child: Row(
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(right: 4),
-                              child: Icon(
-                                Icons.error,
-                                color: Color(0xff394452),
-                              ),
-                            ),
-                            Text(
-                              'Please fill the Full Name',
-                              style: GoogleFonts.sourceSansPro(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: const Color(0xff394452)),
-                            ),
-                          ],
-                        ),
-                        padding:
-                            const EdgeInsets.only(top: 6, bottom: 6, left: 36),
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            color: Color(0xffEBEEF2)),
-                      ),
-                    )
+                      child: Warning(
+                        text: 'Please fill the full Name',
+                      ))
                   : const SizedBox.shrink(),
+              35.verticalSpace,
               Padding(
-                padding: const EdgeInsets.only(left: 48, top: 35),
-                child: Row(
-                  children: [
-                    Text(
-                      'Nick Name',
-                      style: GoogleFonts.sourceSansPro(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xff2C3A4B)),
-                    ),
-                    Text(
-                      '*',
-                      style: GoogleFonts.sourceSansPro(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xffDA1414)),
-                    ),
-                  ],
-                ),
-              ),
+                  padding: const EdgeInsets.only(left: 48),
+                  child: Label(
+                    text: 'Nick Name',
+                  )),
               Padding(
                 padding: const EdgeInsets.only(top: 8, left: 24, right: 24),
                 child: CustomTextFrom(
@@ -175,62 +133,23 @@ class _FillBioPageState extends State<FillBioPage> {
                     setState(() {});
                   },
                   controller: nickname,
-                  keyboardType: TextInputType.name, hintext: 'Nick Name',
-                  
+                  label: '',
+                  keyboardType: TextInputType.name,
+                  hintext: 'Nick Name', onChange: (s) {  },
                 ),
               ),
               isNickNameEmpty
                   ? Padding(
                       padding:
                           const EdgeInsets.only(left: 24, top: 8, right: 24),
-                      child: Container(
-                        child: Row(
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(right: 4),
-                              child: Icon(
-                                Icons.error,
-                                color: Color(0xff394452),
-                              ),
-                            ),
-                            Text(
-                              'Please fill the Nick Name',
-                              style: GoogleFonts.sourceSansPro(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: const Color(0xff394452)),
-                            ),
-                          ],
-                        ),
-                        padding:
-                            const EdgeInsets.only(top: 6, bottom: 6, left: 36),
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            color: Color(0xffEBEEF2)),
-                      ),
-                    )
+                      child: Warning(text: 'Please fill the Nick Name'))
                   : const SizedBox.shrink(),
+              35.verticalSpace,
               Padding(
-                padding: const EdgeInsets.only(left: 48, top: 35),
-                child: Row(
-                  children: [
-                    Text(
-                      'Phone Number',
-                      style: GoogleFonts.sourceSansPro(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xff2C3A4B)),
-                    ),
-                    Text(
-                      '*',
-                      style: GoogleFonts.sourceSansPro(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xffDA1414)),
-                    ),
-                  ],
-                ),
-              ),
+                  padding: const EdgeInsets.only(left: 48),
+                  child: Label(
+                    text: 'Phone Number',
+                  )),
               Padding(
                 padding: const EdgeInsets.only(top: 8, left: 24, right: 24),
                 child: CustomTextFrom(
@@ -239,95 +158,30 @@ class _FillBioPageState extends State<FillBioPage> {
                     setState(() {});
                   },
                   controller: phonenumber,
-                  keyboardType: TextInputType.phone, hintext: 'Phone Number',
-                 
+                  label: '',
+                  keyboardType: TextInputType.phone,
+                  hintext: 'Phone Number', onChange: (s) {  },
                 ),
               ),
               isPhoneNumberEmpty
                   ? Padding(
                       padding:
                           const EdgeInsets.only(left: 24, top: 8, right: 24),
-                      child: Container(
-                        child: Row(
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(right: 4),
-                              child: Icon(
-                                Icons.error,
-                                color: Color(0xff394452),
-                              ),
-                            ),
-                            Text(
-                              'Please fill the Phone Number',
-                              style: GoogleFonts.sourceSansPro(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: const Color(0xff394452)),
-                            ),
-                          ],
-                        ),
-                        padding:
-                            const EdgeInsets.only(top: 6, bottom: 6, left: 36),
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            color: Color(0xffEBEEF2)),
-                      ),
-                    )
+                      child: Warning(text: 'Please fill the Phone Number'))
                   : const SizedBox.shrink(),
+              35.verticalSpace,
               Padding(
-                padding: const EdgeInsets.only(left: 48, top: 35),
-                child: Row(
-                  children: [
-                    Text(
-                      'Gender',
-                      style: GoogleFonts.sourceSansPro(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xff2C3A4B)),
-                    ),
-                    Text(
-                      '*',
-                      style: GoogleFonts.sourceSansPro(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xffDA1414)),
-                    ),
-                  ],
-                ),
-              ),
+                  padding: const EdgeInsets.only(left: 48),
+                  child: Label(
+                    text: 'Gender',
+                  )),
+              GenderChoosing(),
+              35.verticalSpace,
               Padding(
-                padding: const EdgeInsets.only(top: 8, left: 24, right: 24),
-                child: CustomTextFrom(
-                  onchange: (value) {
-                    isGenderEmpty = false;
-                    setState(() {});
-                  },
-                  controller: genderController,
-                  keyboardType: TextInputType.emailAddress, hintext: 'Gender',
-                
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 48, top: 35),
-                child: Row(
-                  children: [
-                    Text(
-                      'Date of Birth',
-                      style: GoogleFonts.sourceSansPro(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xff2C3A4B)),
-                    ),
-                    Text(
-                      '*',
-                      style: GoogleFonts.sourceSansPro(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xffDA1414)),
-                    ),
-                  ],
-                ),
-              ),
+                  padding: const EdgeInsets.only(left: 48),
+                  child: Label(
+                    text: 'Date of Birth',
+                  )),
               Padding(
                 padding: const EdgeInsets.only(top: 8, left: 24, right: 24),
                 child: TextFormField(
@@ -376,27 +230,12 @@ class _FillBioPageState extends State<FillBioPage> {
                   ),
                 ),
               ),
+              35.verticalSpace,
               Padding(
-                padding: const EdgeInsets.only(left: 48, top: 35),
-                child: Row(
-                  children: [
-                    Text(
-                      'Password',
-                      style: GoogleFonts.sourceSansPro(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xff2C3A4B)),
-                    ),
-                    Text(
-                      '*',
-                      style: GoogleFonts.sourceSansPro(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xffDA1414)),
-                    ),
-                  ],
-                ),
-              ),
+                  padding: const EdgeInsets.only(left: 48),
+                  child: Label(
+                    text: 'Password',
+                  )),
               Padding(
                 padding: const EdgeInsets.only(top: 8, left: 24, right: 24),
                 child: CustomTextFrom(
@@ -404,52 +243,18 @@ class _FillBioPageState extends State<FillBioPage> {
                     isPasswEmty = false;
                     setState(() {});
                   },
-                  suffixicon: IconButton(
-                      onPressed: (() {
-                        setState(() {
-                          visibilityOfpasswor = !visibilityOfpasswor;
-                        });
-                      }),
-                      icon: Icon(visibilityOfpasswor
-                          ? Icons.visibility
-                          : Icons.visibility_off)),
+                  label: '',
+                  isObscure: true,
                   controller: passwor,
-                  obscureText: !visibilityOfpasswor,
-                  obscuringCharacter: '*',
-                  keyboardType: TextInputType.emailAddress, hintext: 'Password',
-                 
+                  keyboardType: TextInputType.emailAddress,
+                  hintext: 'Password', onChange: (s) {  },
                 ),
               ),
               isAddressEmpty
                   ? Padding(
                       padding:
                           const EdgeInsets.only(left: 24, top: 8, right: 24),
-                      child: Container(
-                        child: Row(
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(right: 4),
-                              child: Icon(
-                                Icons.error,
-                                color: Color(0xff394452),
-                              ),
-                            ),
-                            Text(
-                              'Please fill the Password',
-                              style: GoogleFonts.sourceSansPro(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: const Color(0xff394452)),
-                            ),
-                          ],
-                        ),
-                        padding:
-                            const EdgeInsets.only(top: 6, bottom: 6, left: 36),
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            color: Color(0xffEBEEF2)),
-                      ),
-                    )
+                      child: Warning(text: 'Please fill the Password'))
                   : const SizedBox.shrink(),
               Padding(
                 padding:
@@ -478,7 +283,7 @@ class _FillBioPageState extends State<FillBioPage> {
                           username: nickname.text,
                           password: passwor.text,
                           email: email.text,
-                          gender: genderController.text,
+                          gender: context.read<AuthController>().gender,
                           birth: dateOfBirth.text,
                           onSuccess: () {
                             Navigator.pushAndRemoveUntil(
@@ -490,9 +295,8 @@ class _FillBioPageState extends State<FillBioPage> {
                     }
                   },
                   child: AnimatedContainer(
+                    padding: EdgeInsets.symmetric(vertical: 12),
                     duration: const Duration(milliseconds: 400),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 14, horizontal: 161),
                     decoration: BoxDecoration(
                       color: fullname.text.isEmpty ||
                               nickname.text.isEmpty ||

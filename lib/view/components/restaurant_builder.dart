@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
+import '../../controller/home_controller.dart';
 import '../style/style.dart';
+import 'cached_network_image.dart';
 
 class RestaurantListview extends StatelessWidget {
   const RestaurantListview({super.key});
@@ -9,9 +12,9 @@ class RestaurantListview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        padding: const EdgeInsets.only(bottom: 32, top: 32, left: 24),
+        padding: const EdgeInsets.only(left: 24),
         scrollDirection: Axis.horizontal,
-        itemCount: 3,
+        itemCount: context.watch<HomeController>().listOfCategory.length,
         itemBuilder: ((context, index) => Container(
               margin: EdgeInsets.only(left: 10.w),
               width: 160.w,
@@ -28,15 +31,28 @@ class RestaurantListview extends StatelessWidget {
               child: Column(
                 children: [
                   24.verticalSpace,
-                  const Icon(Icons.restart_alt),
+                  context.watch<HomeController>().listOfCategory[index].image !=
+                          null
+                      ? CustomImageNetwork(
+                          image: context
+                                  .watch<HomeController>()
+                                  .listOfCategory[index]
+                                  .image ??
+                              "",
+                          height: 70,
+                          radius: 0,
+                        )
+                      : const SizedBox.shrink(),
                   24.verticalSpace,
-                  Text('Restaurant name',
+                  Text(
+                      context
+                              .watch<HomeController>()
+                              .listOfCategory[index]
+                              .name ??
+                          "",
                       style: Style.textStyleRegular(
                           size: 18, textColor: Style.blackColor)),
                   4.verticalSpace,
-                  Text('15 min',
-                      style: Style.textStyleRegular2(
-                          size: 14, textColor: const Color(0xff6D7580))),
                 ],
               ),
             )));

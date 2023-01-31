@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controller/auth_controller.dart';
+import '../../style/style.dart';
+import '../product/add_product_page.dart';
 import 'home_page.dart';
 
 class GeneralPage extends StatefulWidget {
@@ -15,10 +17,11 @@ class GeneralPage extends StatefulWidget {
 
 class _GeneralPageState extends State<GeneralPage> {
   List<Widget> mainPages = [
-    HomePage(),
-    Placeholder(),
-    Placeholder(),
-    Placeholder(),
+    const HomePage(),
+    const Placeholder(),
+    const AddProductPage(),
+    const Placeholder(),
+    const Placeholder(),
   ];
 
   int currentIndex = 0;
@@ -32,40 +35,43 @@ class _GeneralPageState extends State<GeneralPage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.transparent,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(12.r)),
-          child: BottomNavyBar(
-            selectedIndex: context.watch<AuthController>().currentIndex,
-            showElevation: true,
-            backgroundColor: Colors.white,
-            containerHeight: 91,
-            itemCornerRadius: 24,
-            curve: Curves.easeIn,
-            items: [
-              BottomNavyBarItem(
-                  icon: Icon(Icons.home),
-                  title: Text('Home'),
-                  activeColor: Color(0xffFF1843)),
-              BottomNavyBarItem(
-                  icon: Icon(Icons.shopping_basket),
-                  title: Text('Order'),
-                  activeColor: Color(0xffFF1843)),
-              BottomNavyBarItem(
-                  icon: Icon(Icons.message),
-                  title: Text('Chat'),
-                  activeColor: Color(0xffFF1843)),
-              BottomNavyBarItem(
-                icon: Icon(Icons.person),
-                title: Text('Profile'),
-                activeColor: Color(0xffFF1843),
-              )
-            ],
-            onItemSelected: (value) {
-              context.read<AuthController>().setIndex(value);
-            },
-          ),
+      floatingActionButton: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(12.r)),
+        child: BottomNavyBar(
+          selectedIndex: context.watch<AuthController>().currentIndex,
+          // showElevation: true,
+          backgroundColor: Colors.white,
+          containerHeight: 90,
+          itemCornerRadius: 12,
+          curve: Curves.easeIn,
+          items: [
+            BottomNavyBarItem(
+                icon: const Icon(Icons.home),
+                title: const Text('Home'),
+                activeColor: Style.primaryColor),
+            BottomNavyBarItem(
+                icon: const Icon(Icons.shopping_basket),
+                title: const Text('Order'),
+                activeColor: Style.primaryColor),
+            BottomNavyBarItem(
+                icon: const Icon(
+                  Icons.add_circle_outline_sharp,
+                ),
+                title: const Text('Add Product'),
+                activeColor: Style.primaryColor),
+            BottomNavyBarItem(
+                icon: const Icon(Icons.message),
+                title: const Text('Chat'),
+                activeColor: Style.primaryColor),
+            BottomNavyBarItem(
+              icon: const Icon(Icons.person),
+              title: const Text('Profile'),
+              activeColor: Style.primaryColor,
+            )
+          ],
+          onItemSelected: (value) {
+            context.read<AuthController>().setIndex(value);
+          },
         ),
       ),
     );

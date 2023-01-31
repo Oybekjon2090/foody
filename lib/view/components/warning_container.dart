@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../style/style.dart';
 
+
 class Warning extends StatelessWidget {
   final String text;
   const Warning({super.key, required this.text});

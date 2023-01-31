@@ -75,8 +75,9 @@ class _SignInPageState extends State<SignInPage> {
                   setState(() {});
                 },
                 controller: phone,
+                label: '',
                 keyboardType: TextInputType.phone,
-                hintext: 'Phone Number',
+                hintext: 'Phone Number', onChange: (s) {  },
               ),
             ),
             8.verticalSpace,
@@ -108,19 +109,11 @@ class _SignInPageState extends State<SignInPage> {
                   isPasswordEmpty = false;
                   setState(() {});
                 },
-                suffixicon: IconButton(
-                    onPressed: () {
-                      visibilityOfpasswor = !visibilityOfpasswor;
-                      setState(() {});
-                    },
-                    icon: Icon(visibilityOfpasswor
-                        ? Icons.visibility
-                        : Icons.visibility_off)),
+                isObscure: true,
+                label: '',
                 controller: password,
-                obscureText: !visibilityOfpasswor,
-                obscuringCharacter: '*',
                 keyboardType: TextInputType.multiline,
-                hintext: 'Password',
+                hintext: 'Password', onChange: (s) {  },
               ),
             ),
             8.verticalSpace,
@@ -196,6 +189,7 @@ class _SignInPageState extends State<SignInPage> {
               ),
               TextButton(
                 onPressed: (() {
+                  context.read<AuthController>().errorText = '';
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (_) => SignUpPage()),
                       (route) => false);

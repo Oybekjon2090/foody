@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../style/style.dart';
 
-
 class CkeckBox extends StatefulWidget {
   const CkeckBox({super.key});
 

@@ -4,7 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foody/view/pages/auth/splash_screen.dart';
 import 'package:provider/provider.dart';
 
+import 'controller/app_controller.dart';
 import 'controller/auth_controller.dart';
+import 'controller/home_controller.dart';
+import 'controller/product_controller.dart';
 import 'controller/user_controller.dart';
 
 Future<void> main() async {
@@ -22,15 +25,21 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthController()),
-        ChangeNotifierProvider(create: (context) => UserController())
+        ChangeNotifierProvider(create: (context) => UserController()),
+        ChangeNotifierProvider(create: (context) => ProductController()),
+         ChangeNotifierProvider(create: (context) => HomeController()),
+        ChangeNotifierProvider(create: (context) => AppController())
       ],
       child: ScreenUtilInit(
           designSize: const Size(428, 926),
           minTextAdapt: true,
           splitScreenMode: true,
           builder: (context, child) {
-            return const MaterialApp(
-              home: SplashScreen(),
+            return MaterialApp(
+              theme: ThemeData(
+                useMaterial3: true,
+              ),
+              home: const SplashScreen(),
             );
           }),
     );

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../style/style.dart';
 import '../home/general_page.dart';
 
+
 class CongratsPage extends StatelessWidget {
   const CongratsPage({super.key});
 
