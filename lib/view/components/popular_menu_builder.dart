@@ -14,12 +14,12 @@ class MenuListView extends StatelessWidget {
     return ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: context.watch<HomeController>().listOfProduct.length,
+        itemCount: 3,
         itemBuilder: ((context, index) => Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Container(
                 margin: const EdgeInsets.only(bottom: 30),
-                height: 88.h,
+                height: 120.h,
                 width: 380.w,
                 decoration: BoxDecoration(
                     boxShadow: [
@@ -52,40 +52,50 @@ class MenuListView extends StatelessWidget {
                                 width: 64.w,
                               )),
                     20.horizontalSpace,
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: Text(
-                              context
-                                      .watch<HomeController>()
-                                      .listOfProduct[index]
-                                      .name ??
-                                  "",
-                              style: Style.textStyleRegular()),
+                    Expanded(
+                      child: Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5),
+                              child: Text(
+                                  context
+                                          .watch<HomeController>()
+                                          .listOfProduct[index]
+                                          .name ??
+                                      "",
+                                      maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                  style: Style.textStyleRegular()),
+                            ),
+                            4.verticalSpace,
+                            Text(
+                                context
+                                        .watch<HomeController>()
+                                        .listOfProduct[index]
+                                        .desc ??
+                                    "",
+                                    maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                style: Style.textStyleRegular2(
+                                    size: 14, textColor: const Color(0xff858C94))),
+                      
+                                    Column(
+                                      children: [
+                                        Text(
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            '\$${context.watch<HomeController>().listOfProduct[index].price.toString()}',
+                                            style: Style.textStyleRegular(
+                                                size: 20, textColor: Style.primaryColor)),
+                                      ],
+                                    )
+                          ],
                         ),
-                        4.verticalSpace,
-                        Text(
-                            context
-                                    .watch<HomeController>()
-                                    .listOfProduct[index]
-                                    .desc ??
-                                "",
-                            style: Style.textStyleRegular2(
-                                size: 14, textColor: const Color(0xff858C94)))
-                      ],
+                      ),
                     ),
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 32, top: 22),
-                      child: Text(
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          '\$${context.watch<HomeController>().listOfProduct[index].price.toString()}',
-                          style: Style.textStyleRegular(
-                              size: 20, textColor: Style.primaryColor)),
-                    )
+                    
                   ],
                 ),
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../../controller/home_controller.dart';
@@ -11,7 +12,6 @@ import '../../components/restaurant_builder.dart';
 import '../../components/search_filter.dart';
 import '../../style/style.dart';
 import '../auth/sign_in.dart';
-import '../product/add_product_page.dart';
 import '../product/product_page.dart';
 import 'all_categories.dart';
 
@@ -55,8 +55,8 @@ class _HomePageState extends State<HomePage> {
                             24.horizontalSpace,
                             CustomImageNetwork(
                                 radius: 100,
-                                height: 80.h,
-                                width: 80.w,
+                                height: 64.h,
+                                width: 64.w,
                                 image:
                                     '${context.watch<UserController>().user?.avatar ?? ""}'),
                             24.horizontalSpace,
