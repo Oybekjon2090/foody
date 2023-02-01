@@ -1,5 +1,4 @@
-
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:foody/model/product_model.dart';
 
 class BannerModel {
@@ -11,6 +10,6 @@ class BannerModel {
   factory BannerModel.fromJson(
       {required Map<String, dynamic> data, required Map? dataProduct}) {
     return BannerModel(
-        title: data["title"], product: ProductModel.fromJson(dataProduct!));
+        title: data["title"], product: ProductModel.fromJson(dataProduct!,false));
   }
 }

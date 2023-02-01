@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:provider/provider.dart';
 
 import '../../controller/home_controller.dart';
@@ -20,7 +19,8 @@ class MenuListView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Container(
                 margin: const EdgeInsets.only(bottom: 30),
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                height: 88.h,
+                width: 380.w,
                 decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -52,44 +52,39 @@ class MenuListView extends StatelessWidget {
                                 width: 64.w,
                               )),
                     20.horizontalSpace,
-                    Padding(
-                      padding: const EdgeInsets.only(top: 18),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: Text(
-                                context
-                                        .watch<HomeController>()
-                                        .listOfProduct[index]
-                                        .name ??
-                                    "",
-                                style: Style.textStyleRegular()),
-                          ),
-                          4.verticalSpace,
-                          Text(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Text(
                               context
                                       .watch<HomeController>()
                                       .listOfProduct[index]
-                                      .desc ??
+                                      .name ??
                                   "",
-                              style: Style.textStyleRegular2(
-                                  size: 14, textColor: const Color(0xff858C94)))
-                        ],
-                      ),
+                              style: Style.textStyleRegular()),
+                        ),
+                        4.verticalSpace,
+                        Text(
+                            context
+                                    .watch<HomeController>()
+                                    .listOfProduct[index]
+                                    .desc ??
+                                "",
+                            style: Style.textStyleRegular2(
+                                size: 14, textColor: const Color(0xff858C94)))
+                      ],
                     ),
                     const Spacer(),
                     Padding(
                       padding: const EdgeInsets.only(right: 32, top: 22),
                       child: Text(
-                          context
-                              .watch<HomeController>()
-                              .listOfProduct[index]
-                              .price
-                              .toString(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          '\$${context.watch<HomeController>().listOfProduct[index].price.toString()}',
                           style: Style.textStyleRegular(
-                              size: 18, textColor: Style.primaryColor)),
+                              size: 20, textColor: Style.primaryColor)),
                     )
                   ],
                 ),

@@ -41,7 +41,7 @@ class _GeneralPageState extends State<GeneralPage> {
           selectedIndex: context.watch<AuthController>().currentIndex,
           // showElevation: true,
           backgroundColor: Colors.white,
-          containerHeight: 90,
+          containerHeight: 91,
           itemCornerRadius: 12,
           curve: Curves.easeIn,
           items: [

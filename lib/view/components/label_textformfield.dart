@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+
+
+import 'package:flutter/cupertino.dart';
 
 import '../style/style.dart';
-
 
 class Label extends StatelessWidget {
   final String text;

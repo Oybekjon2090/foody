@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:foody/view/pages/auth/sign_in.dart';
+
 
 import '../../style/style.dart';
-import 'sign_in.dart';
-
 
 class OnBoardingPage extends StatelessWidget {
   const OnBoardingPage({super.key});

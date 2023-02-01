@@ -4,16 +4,45 @@ import 'package:flutter/cupertino.dart';
 import '../model/banner_model.dart';
 import '../model/category_model.dart';
 import '../model/product_model.dart';
-
+import '../model/user_model.dart';
 
 class HomeController extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+ UserModel? user;
   List<BannerModel> listOfBanners = [];
   List<ProductModel> listOfProduct = [];
   List<CategoryModel> listOfCategory = [];
+  List listOfCategoryDocId = [];
+  List listOfProductDocId = [];
   bool _isLoading = true;
+  bool setFilter = false;
   bool _isCategoryLoading = true;
   bool _isProductLoading = true;
+  int selectIndex = -1;
+   changeIndex(int index) async {
+    if (selectIndex == index) {
+      selectIndex = -1;
+      getProduct(isLimit: false);
+    } else {
+      selectIndex = index;
+      var res = await firestore
+          .collection("products")
+          .where("category", isEqualTo: listOfCategoryDocId[selectIndex])
+          .get();
+      listOfProduct.clear();
+      listOfProductDocId.clear();
+      for (var element in res.docs) {
+        listOfProduct.add(ProductModel.fromJson(element.data(),user?.likes?.contains(element.id)));
+        listOfProductDocId.add(element.id);
+      }
+    }
+    notifyListeners();
+  }
+
+  setFilterChange() {
+    setFilter = !setFilter;
+    notifyListeners();
+  }
 
   getBanners() async {
     _isLoading = true;
@@ -43,8 +72,10 @@ class HomeController extends ChangeNotifier {
       res = await firestore.collection("category").get();
     }
     listOfCategory.clear();
+    listOfCategoryDocId.clear();
     for (var element in res.docs) {
       listOfCategory.add(CategoryModel.fromJson(element.data()));
+      listOfCategoryDocId.add(element.id);
     }
     _isCategoryLoading = false;
     notifyListeners();
@@ -54,24 +85,33 @@ class HomeController extends ChangeNotifier {
     var res = await firestore.collection("category").orderBy("name").startAt(
         [name.toLowerCase()]).endAt(["${name.toLowerCase()}\uf8ff"]).get();
     listOfCategory.clear();
+    listOfCategoryDocId.clear();
     for (var element in res.docs) {
       listOfCategory.add(CategoryModel.fromJson(element.data()));
+      listOfCategoryDocId.add(element.id);
     }
     notifyListeners();
   }
 
-  getProduct() async {
+  getProduct({bool isLimit = true}) async {
     _isProductLoading = true;
     notifyListeners();
-    var res = await firestore.collection("products").get();
+    var res;
+    if (isLimit) {
+      res = await firestore.collection("products").limit(5).get();
+    } else {
+      res = await firestore.collection("products").get();
+    }
     listOfProduct.clear();
+    listOfProductDocId.clear();
     for (var element in res.docs) {
-      listOfProduct.add(ProductModel.fromJson(element.data()));
+      listOfProduct.add(ProductModel.fromJson(element.data(),user?.likes?.contains(element.id)));
+      listOfProductDocId.add(element.id);
     }
     _isProductLoading = false;
     notifyListeners();
   }
-
-  bool get isTotalLoading =>
+  
+   bool get isTotalLoading =>
       _isLoading || _isCategoryLoading || _isProductLoading;
 }

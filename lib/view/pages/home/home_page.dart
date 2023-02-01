@@ -8,10 +8,12 @@ import '../../components/akciya_builder.dart';
 import '../../components/cached_network_image.dart';
 import '../../components/popular_menu_builder.dart';
 import '../../components/restaurant_builder.dart';
+import '../../components/search_filter.dart';
 import '../../style/style.dart';
 import '../auth/sign_in.dart';
-import 'caticorys_page.dart';
-
+import '../product/add_product_page.dart';
+import '../product/product_page.dart';
+import 'all_categories.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -42,113 +44,87 @@ class _HomePageState extends State<HomePage> {
                 DecorationImage(image: AssetImage('assets/image/Group.png'))),
         child: Scaffold(
           body: context.watch<HomeController>().isTotalLoading
-              ? const CircularProgressIndicator()
+              ? Center(child: const CircularProgressIndicator())
               : SafeArea(
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height,
                     child: Column(
                       children: [
                         Row(
-                    children: [
-                      24.horizontalSpace,
-                      CustomImageNetwork(
-                          radius: 100,
-                          height: 62.h,
-                          width: 62.w,
-                          image:
-                              '${context.watch<UserController>().user?.avatar ?? ""}'),
-                              16.horizontalSpace,
-                          Text('Hello👋',
-                              style: Style.textStyleRegular(size: 18)),
-                              10.horizontalSpace,
-                          Text(
-                              context.watch<UserController>().user?.username ??
-                                  '',
-                              style: Style.textStyleRegular(size: 20),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,),
-
-                      const Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: GestureDetector(
-                          onTap: () {
-                            context.read<UserController>().logOut(() {
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const SignInPage()),
-                                  (route) => false);
-                            });
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: Color(0xffF6F8FB),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12))),
-                            child: Icon(
-                              Icons.logout_outlined,
-                              color: Color(0xffF43F5E),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                        32.verticalSpace,
-                        Row(
                           children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 24, right: 20),
+                            24.horizontalSpace,
+                            CustomImageNetwork(
+                                radius: 100,
+                                height: 80.h,
+                                width: 80.w,
+                                image:
+                                    '${context.watch<UserController>().user?.avatar ?? ""}'),
+                            24.horizontalSpace,
+                            Expanded(
                               child: Container(
-                                height: 45.h,
-                                width: 316.w,
-                                child: TextFormField(
-                                  keyboardType: TextInputType.name,
-                                  decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: const Color(0xffF4F6F9),
-                                      contentPadding: const EdgeInsets.only(
-                                        left: 28,
-                                      ),
-                                      suffixIcon:
-                                          const Icon(Icons.search_rounded),
-                                      hintText: 'Search',
-                                      hintStyle:
-                                          Style.textStyleRegular2(size: 14),
-                                      focusedBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0xffF4F6F9),
-                                          ),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(100))),
-                                      enabledBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0xffF4F6F9),
-                                          ),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(100)))),
+                                child: Column(
+                                  children: [
+                                    Text('Hello👋',
+                                        style:
+                                            Style.textStyleRegular(size: 19)),
+                                    Text(
+                                        overflow: TextOverflow.visible,
+                                        maxLines: 1,
+                                        softWrap: false,
+                                        context
+                                                .watch<UserController>()
+                                                .user
+                                                ?.username ??
+                                            '',
+                                        style:
+                                            Style.textStyleRegular(size: 19)),
+                                  ],
                                 ),
                               ),
                             ),
-                            Container(
-                              height: 50,
-                              width: 50,
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(12)),
-                                  color:
-                                      const Color(0xffF43F5E).withOpacity(0.1)),
-                              child: const Icon(
-                                Icons.filter_list,
-                                color: Color(0xffF43F5E),
+                            const Spacer(),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 24),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                    color: Color(0xffF6F8FB),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12))),
+                                child: const Icon(
+                                  Icons.notifications_active,
+                                  color: Color(0xffF43F5E),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: GestureDetector(
+                                onTap: () {
+                                  context.read<UserController>().logOut(() {
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => const SignInPage()),
+                                        (route) => false);
+                                  });
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: const BoxDecoration(
+                                      color: Color(0xffF6F8FB),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12))),
+                                  child: const Icon(
+                                    Icons.logout_outlined,
+                                    color: Color(0xffF43F5E),
+                                  ),
+                                ),
                               ),
                             )
                           ],
                         ),
+                        32.verticalSpace,
+                        SearchFilter(),
                         Expanded(
                           child: SingleChildScrollView(
                             child: Column(
@@ -186,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 32.verticalSpace,
                                 SizedBox(
-                                    height: 190.h,
+                                    height: 280.h,
                                     child: const RestaurantListview()),
                                 32.verticalSpace,
                                 Row(
@@ -202,10 +178,10 @@ class _HomePageState extends State<HomePage> {
                                       padding: const EdgeInsets.only(right: 24),
                                       child: GestureDetector(
                                         onTap: () {
-                                          // Navigator.of(context).push(
-                                          //     MaterialPageRoute(
-                                          //         builder: ((context) =>
-                                          //             PopMenuPage())));
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: ((context) =>
+                                                      ProductListPage())));
                                         },
                                         child: Text('See all',
                                             style: Style.textStyleRegular2(

@@ -1,0 +1,165 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:provider/provider.dart';
+
+import '../../../controller/home_controller.dart';
+import '../../components/cached_network_image.dart';
+import '../../components/custom_textform.dart';
+import '../../style/style.dart';
+
+class ProductListPage extends StatefulWidget {
+  const ProductListPage({Key? key}) : super(key: key);
+
+  @override
+  State<ProductListPage> createState() => _ProductListPageState();
+}
+
+class _ProductListPageState extends State<ProductListPage> {
+  final TextEditingController search = TextEditingController();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<HomeController>().getProduct(isLimit: false);
+      context.read<HomeController>().getCategory(isLimit: false);
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = context.watch<HomeController>();
+    final event = context.read<HomeController>();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Products"),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: CustomTextFrom(
+                    controller: search,
+                    label: "Search",
+                    onChange: (s) {
+                      // event.searchCategory(s);
+                    }, hintext: '',
+                  ),
+                ),
+                IconButton(
+                    onPressed: () {
+                      event.setFilterChange();
+                    },
+                    icon: Icon(Icons.menu))
+              ],
+            ),
+          ),
+          state.setFilter || (state.selectIndex == -1)
+              ? const SizedBox.shrink() : Container(
+            margin: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color:  Colors.pinkAccent,
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(color: Colors.pinkAccent),
+            ),
+            padding: const EdgeInsets.symmetric(
+                horizontal: 8, vertical: 6),
+            child: Text(state.listOfCategory[state.selectIndex].name ?? ""),
+          ),
+          Expanded(
+            child: state.setFilter
+                ? Wrap(
+                    children: [
+                      for (int i = 0; i < state.listOfCategory.length; i++)
+                        InkWell(
+                          onTap: () {
+                            event.changeIndex(i);
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                              color: state.selectIndex == i
+                                  ? Colors.pinkAccent
+                                  : Colors.white,
+                              borderRadius: BorderRadius.circular(24),
+                              border: Border.all(color: Colors.pinkAccent),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 6),
+                            child: Text(state.listOfCategory[i].name ?? ""),
+                          ),
+                        )
+                    ],
+                  )
+                : ListView.builder(
+                    shrinkWrap: true,
+                    itemCount:
+                        context.watch<HomeController>().listOfProduct.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.all(16),
+                        width: double.infinity,
+                        height: 90,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                      BoxShadow(
+                          blurRadius: 50,
+                          offset: const Offset(0, 6),
+                          color: const Color(0xff5A6CEA).withOpacity(0.08))
+                    ],
+                                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                    color: Colors.white
+                        ),
+                        child: Row(
+                          
+                          children: [
+                            state.listOfProduct[index].image == null
+                                ? const SizedBox.shrink()
+                                : CustomImageNetwork(
+                                image: state.listOfProduct[index].image ?? "",
+                                height: 90.h,
+                                width: 80.w,
+                              ),
+
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                                      padding: const EdgeInsets.only(top: 5),
+                                                      child: Text(state.listOfProduct[index].name ?? "",
+                                                      maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                                style: Style.textStyleRegular()),
+                                                    ),
+                                  Text(state.listOfProduct[index].desc ?? "",
+                                  maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                                style: Style.textStyleRegular())
+                                
+                                ],
+                              ),
+                            ),
+                            const Spacer(),
+                            Text(
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          '\$${state.listOfProduct[index].price.toString()}',
+                          style: Style.textStyleRegular(
+                              size: 20, textColor: Style.primaryColor)),
+                            
+                          ],
+                        ),
+                      );
+                    }),
+          )
+        ],
+      ),
+    );
+  }
+}

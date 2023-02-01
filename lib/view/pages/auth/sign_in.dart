@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:foody/view/pages/auth/sign_up.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +11,7 @@ import '../../components/facebook_google.dart';
 import '../../components/warning_container.dart';
 import '../../style/style.dart';
 import '../home/general_page.dart';
+import 'sign_up.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -77,7 +77,7 @@ class _SignInPageState extends State<SignInPage> {
                 controller: phone,
                 label: '',
                 keyboardType: TextInputType.phone,
-                hintext: 'Phone Number', onChange: (s) {  },
+                hintext: 'Phone Number',
               ),
             ),
             8.verticalSpace,
@@ -113,7 +113,7 @@ class _SignInPageState extends State<SignInPage> {
                 label: '',
                 controller: password,
                 keyboardType: TextInputType.multiline,
-                hintext: 'Password', onChange: (s) {  },
+                hintext: 'Password',
               ),
             ),
             8.verticalSpace,

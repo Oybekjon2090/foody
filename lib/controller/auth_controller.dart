@@ -180,8 +180,9 @@ class AuthController extends ChangeNotifier {
   }
 
   createUser(VoidCallback onSuccess) async {
-    final storageRef = FirebaseStorage.instance.ref().child("avatars/${DateTime.now().toString()}");
-    
+    final storageRef = FirebaseStorage.instance
+        .ref()
+        .child("avatars/${DateTime.now().toString()}");
     await storageRef.putFile(File(imagePath));
 
     String url = await storageRef.getDownloadURL();

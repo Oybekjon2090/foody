@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:foody/view/pages/auth/sign_in.dart';
-import 'package:foody/view/pages/auth/verify_page.dart';
 import 'package:provider/provider.dart';
 import '../../../controller/auth_controller.dart';
 import '../../components/auth_button.dart';
@@ -10,6 +8,8 @@ import '../../components/custom_textform.dart';
 import '../../components/facebook_google.dart';
 import '../../components/warning_container.dart';
 import '../../style/style.dart';
+import 'sign_in.dart';
+import 'verify_page.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -75,7 +75,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 controller: phone,
                 label: '',
                 keyboardType: TextInputType.phone,
-                hintext: 'Phone Number', onChange: (s) {  },
+                hintext: 'Phone Number',
               ),
             ),
             8.verticalSpace,

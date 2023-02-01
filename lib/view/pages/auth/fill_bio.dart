@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:foody/view/pages/auth/set_photo.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +12,7 @@ import '../../components/custom_textform.dart';
 import '../../components/gender_choose.dart';
 import '../../components/label_textformfield.dart';
 import '../../components/warning_container.dart';
+import 'set_photo.dart';
 
 class FillBioPage extends StatefulWidget {
   const FillBioPage({super.key});
@@ -108,7 +107,7 @@ class _FillBioPageState extends State<FillBioPage> {
                   label: '',
                   controller: fullname,
                   keyboardType: TextInputType.emailAddress,
-                  hintext: 'Full Name', onChange: (s) {  },
+                  hintext: 'Full Name',
                 ),
               ),
               isFullNameEmpty
@@ -135,7 +134,7 @@ class _FillBioPageState extends State<FillBioPage> {
                   controller: nickname,
                   label: '',
                   keyboardType: TextInputType.name,
-                  hintext: 'Nick Name', onChange: (s) {  },
+                  hintext: 'Nick Name',
                 ),
               ),
               isNickNameEmpty
@@ -160,7 +159,7 @@ class _FillBioPageState extends State<FillBioPage> {
                   controller: phonenumber,
                   label: '',
                   keyboardType: TextInputType.phone,
-                  hintext: 'Phone Number', onChange: (s) {  },
+                  hintext: 'Phone Number',
                 ),
               ),
               isPhoneNumberEmpty
@@ -247,7 +246,7 @@ class _FillBioPageState extends State<FillBioPage> {
                   isObscure: true,
                   controller: passwor,
                   keyboardType: TextInputType.emailAddress,
-                  hintext: 'Password', onChange: (s) {  },
+                  hintext: 'Password',
                 ),
               ),
               isAddressEmpty

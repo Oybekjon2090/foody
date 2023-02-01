@@ -13,17 +13,17 @@ class AkciyaListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
         padding: EdgeInsets.only(left: 12),
-        scrollDirection: Axis.horizontal, 
+        scrollDirection: Axis.horizontal,
         itemCount: context.watch<HomeController>().listOfBanners.length,
         itemBuilder: ((context, index) => Container(
-              margin: EdgeInsets.only(right: 20),
+              margin: EdgeInsets.only(right: 15),
               height: 180.h,
               width: 380.w,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(24.r)),
                   gradient: Style.linearGradient),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   14.verticalSpace,
                   context
@@ -39,8 +39,8 @@ class AkciyaListView extends StatelessWidget {
                                   .product
                                   .image ??
                               "",
-                          height: 150,
-                          width: 166,
+                          height: double.infinity,
+                          width: 155,
                         )
                       : const SizedBox.shrink(),
                   15.horizontalSpace,
@@ -54,7 +54,7 @@ class AkciyaListView extends StatelessWidget {
                               .listOfBanners[index]
                               .title,
                           style: Style.textStyleRegular(
-                              size: 18, textColor: Style.whiteColor),maxLines: 1,overflow: TextOverflow.ellipsis,),
+                              size: 23, textColor: Style.whiteColor)),
                       Text(
                           context
                                   .watch<HomeController>()
@@ -63,7 +63,7 @@ class AkciyaListView extends StatelessWidget {
                                   .name ??
                               "",
                           style: Style.textStyleRegular(
-                              size: 23, textColor: Style.whiteColor),maxLines: 1,overflow: TextOverflow.ellipsis,),
+                              size: 23, textColor: Style.whiteColor)),
                       14.verticalSpace,
                       Container(
                         width: 120.w,
