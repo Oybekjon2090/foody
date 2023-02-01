@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:provider/provider.dart';
 
 import '../../../controller/home_controller.dart';
 import '../../components/cached_network_image.dart';
-import '../../components/custom_textform.dart';
 import '../../style/style.dart';
 
-class ProductListPage extends StatefulWidget {
-  const ProductListPage({Key? key}) : super(key: key);
+class LikesPage extends StatefulWidget {
+  const LikesPage({super.key});
 
   @override
-  State<ProductListPage> createState() => _ProductListPageState();
+  State<LikesPage> createState() => _LikesPageState();
 }
 
-class _ProductListPageState extends State<ProductListPage> {
-  final TextEditingController search = TextEditingController();
-
-  @override
+class _LikesPageState extends State<LikesPage> {
+   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeController>().getProduct(isLimit: false);
@@ -33,37 +31,12 @@ class _ProductListPageState extends State<ProductListPage> {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<HomeController>();
+     final state = context.watch<HomeController>();
     final event = context.read<HomeController>();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Products"),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: CustomTextFrom(
-                    controller: search,
-                    label: "Search",
-                    onChange: (s) {
-                      // event.searchCategory(s);
-                    },
-                    hintext: '',
-                  ),
-                ),
-                IconButton(
-                    onPressed: () {
-                      event.setFilterChange();
-                    },
-                    icon: Icon(Icons.menu))
-              ],
-            ),
-          ),
-          state.setFilter || (state.selectIndex == -1)
+      appBar: AppBar(title: Text("Likes")),
+      body: Column(children: [
+         state.setFilter || (state.selectIndex == -1)
               ? const SizedBox.shrink()
               : Container(
                   margin: const EdgeInsets.all(6),
@@ -185,8 +158,8 @@ class _ProductListPageState extends State<ProductListPage> {
                       );
                     }),
           )
-        ],
-      ),
+
+      ]),
     );
   }
 }

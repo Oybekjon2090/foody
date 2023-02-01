@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../controller/auth_controller.dart';
 import '../../style/style.dart';
 import '../product/add_product_page.dart';
+import '../product/likes_page.dart';
 import 'home_page.dart';
 
 class GeneralPage extends StatefulWidget {
@@ -18,7 +19,7 @@ class GeneralPage extends StatefulWidget {
 class _GeneralPageState extends State<GeneralPage> {
   List<Widget> mainPages = [
     const HomePage(),
-    const Placeholder(),
+    const LikesPage(),
     const AddProductPage(),
     const Placeholder(),
     const Placeholder(),

@@ -5,6 +5,7 @@ import '../model/banner_model.dart';
 import '../model/category_model.dart';
 import '../model/product_model.dart';
 import '../model/user_model.dart';
+import 'local_store/local.dart';
 
 class HomeController extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -19,6 +20,30 @@ class HomeController extends ChangeNotifier {
   bool _isCategoryLoading = true;
   bool _isProductLoading = true;
   int selectIndex = -1;
+
+   getUser() async {
+    String? docId = await LocalStore.getDocId();
+    var res =
+    await firestore.collection("users").doc(docId).get();
+    user = UserModel.fromJson(res.data());
+  }
+
+  changeLike(int index) async {
+    listOfProduct[index].isLike = !listOfProduct[index].isLike;
+    List addDocIdList = [];
+    for (int i=0;i<listOfProduct.length;i++) {
+      if(listOfProduct[i].isLike){
+        addDocIdList.add(listOfProductDocId[i]);
+      }
+    }
+    firestore.collection("users").doc(await LocalStore.getDocId()).update({
+      "array": List<dynamic>.from(addDocIdList.map((e) => e))
+    });
+    notifyListeners();
+  }
+
+
+  
    changeIndex(int index) async {
     if (selectIndex == index) {
       selectIndex = -1;
