@@ -9,10 +9,13 @@ class CustomTextFrom extends StatelessWidget {
   final String? obscuringCharacter;
   final Widget? suffixicon;
   final Widget? prefixicon;
+  final Widget? suffixIcon;
   final TextInputType keyboardType;
+  final FocusNode? node;
   final ValueChanged<String>? onchange;
   final bool isObscure;
   final String? label;
+  final Widget? prefixIcon;
   
   final ValueChanged<String>? onChange;
 
@@ -27,6 +30,9 @@ class CustomTextFrom extends StatelessWidget {
     this.obscuringCharacter,
     this.label,
    this.onChange, this.prefixicon,
+   this.suffixIcon,this.node,
+   this.prefixIcon,
+   
   }) : super(key: key);
 
   @override
@@ -38,10 +44,11 @@ class CustomTextFrom extends StatelessWidget {
       onChanged: onchange,
       controller: controller,
       keyboardType: keyboardType,
+      focusNode: node,
       obscureText:
           isObscure ? (context.watch<AppController>().isVisibility) : false,
       decoration: InputDecoration(
-          prefixIcon: prefixicon,
+        
           label: Text('$label'),
           hintText: hintext,
           contentPadding:
@@ -61,16 +68,19 @@ class CustomTextFrom extends StatelessWidget {
           focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Color.fromARGB(255, 221, 206, 206)),
               borderRadius: BorderRadius.all(Radius.circular(100))),
-          suffixIcon: isObscure
-              ? IconButton(
-                  onPressed: () {
-                    context.read<AppController>().onChange();
-                  },
-                  icon: context.watch<AppController>().isVisibility
-                      ? const Icon(Icons.visibility)
-                      : const Icon(Icons.visibility_off),
-                )
-              : const SizedBox.shrink()),
+          
+             prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon ??
+              (isObscure
+                  ? IconButton(
+                      onPressed: () {
+                        context.read<AppController>().onChange();
+                      },
+                      icon: context.watch<AppController>().isVisibility
+                          ? const Icon(Icons.visibility)
+                          : const Icon(Icons.visibility_off),
+                    )
+                  : const SizedBox.shrink())),
     );
   }
 }

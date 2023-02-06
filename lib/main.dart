@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'controller/app_controller.dart';
 import 'controller/auth_controller.dart';
+import 'controller/chat_controller.dart';
 import 'controller/home_controller.dart';
 import 'controller/product_controller.dart';
 import 'controller/user_controller.dart';
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => UserController()),
         ChangeNotifierProvider(create: (context) => ProductController()),
          ChangeNotifierProvider(create: (context) => HomeController()),
-        ChangeNotifierProvider(create: (context) => AppController())
+        ChangeNotifierProvider(create: (context) => AppController()),
+        ChangeNotifierProvider(create: (context) => ChatController()),
       ],
       child: ScreenUtilInit(
           designSize: const Size(428, 926),

@@ -1,6 +1,7 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:foody/view/pages/home/chats_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controller/auth_controller.dart';
@@ -21,7 +22,7 @@ class _GeneralPageState extends State<GeneralPage> {
     const HomePage(),
     const LikesPage(),
     const AddProductPage(),
-    const Placeholder(),
+    const ChatsPage(),
     const Placeholder(),
   ];
 
